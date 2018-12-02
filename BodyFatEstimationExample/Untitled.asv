@@ -1,0 +1,20 @@
+a=xlsread(in.xlsx,Sheet1','13R¡Á200C')
+inputs = bodyfatInputs;
+targets = bodyfatInputs;
+X=inputs;
+T=targets;
+size(X)
+size(T)
+net = fitnet(15);
+view(net)
+[net,tr] = train(net,X,T);
+nntraintool
+plotperform(tr)
+testX = X(:,tr.testInd);
+testT = T(:,tr.testInd);
+testY = net(testX);
+perf = mse(net,testT,testY);
+Y = net(X);
+plotregression(T,Y)
+e = T - Y;
+ploterrhist(e)
